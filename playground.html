@@ -36,6 +36,9 @@
             font-weight: 600;
             color: var(--accent-primary);
             font-size: 0.95rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .editor-content {
@@ -67,6 +70,8 @@
             font-size: 0.85rem;
             overflow-y: auto;
             line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         .output-empty {
@@ -109,39 +114,6 @@
             background: rgba(0, 217, 255, 0.1);
         }
 
-        .placeholder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 500px;
-            background: rgba(0, 217, 255, 0.05);
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .placeholder-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .placeholder-text {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-
-        .placeholder-link {
-            color: var(--accent-primary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .placeholder-link:hover {
-            color: var(--accent-secondary);
-        }
-
         .status-badge {
             display: inline-block;
             padding: 0.25rem 0.75rem;
@@ -149,26 +121,17 @@
             color: var(--success);
             border-radius: 20px;
             font-size: 0.8rem;
-            margin-left: 1rem;
+            margin-left: auto;
         }
 
-        .feature-list {
-            list-style: none;
-            margin-top: 2rem;
-        }
-
-        .feature-list li {
-            padding: 0.5rem 0;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-        }
-
-        .feature-list li::before {
-            content: '✓';
-            color: var(--success);
-            margin-right: 0.5rem;
-            font-weight: bold;
+        .loading {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: auto;
         }
 
         @media (max-width: 1024px) {
@@ -205,13 +168,12 @@
             <!-- Code Editor -->
             <div class="editor-panel">
                 <div class="editor-header">
-                    Code Editor
-                    <span class="status-badge">Demo Mode</span>
+                    <span>Code Editor</span>
+                    <span id="status-badge" class="loading">Loading WASM...</span>
                 </div>
                 <div class="editor-content">
                     <textarea id="code-editor" placeholder="// Write BuLang code here...
-print(&quot;Hello, BuLang!&quot;)">// Welcome to BuLang Playground!
-// Try some BuLang code
+write('Hello, BuLang!')">// Welcome to BuLang Playground!
 
 def factorial(n) {
     if n <= 1 {
@@ -220,25 +182,11 @@ def factorial(n) {
     return n * factorial(n - 1)
 }
 
-print("5! = " + factorial(5))
+write("5! = {}", factorial(5))
 
-// Define a class
-class Circle 
-{
-    def new(radius) 
-    {
-        this.radius = radius
-    }
-    
-    def area() 
-    {
-        return 3.14159 * this.radius * this.radius
-    }
-}
-
-circle = Circle(5)
-print("Circle area: " + circle.area())
-
+// Math functions
+write("sqrt(16) = {}", sqrt(16))
+write("sin(0) = {}", sin(0))
 </textarea>
                 </div>
             </div>
@@ -247,16 +195,16 @@ print("Circle area: " + circle.area())
             <div class="editor-panel">
                 <div class="editor-header">Output</div>
                 <div class="editor-content">
-                    <div id="output"></div>
+                    <div id="output" class="output-empty">Waiting for WASM to load...</div>
                 </div>
             </div>
         </div>
 
         <!-- Controls -->
         <div class="controls">
-            <button class="btn btn-primary btn-run" onclick="runCode()">▶ Run Code</button>
-            <button class="btn btn-secondary" onclick="clearCode()">Clear</button>
-            <button class="btn btn-secondary" onclick="resetCode()">Reset</button>
+            <button class="btn btn-primary btn-run" id="run-btn" onclick="runCode()" disabled>▶ Run Code</button>
+            <button class="btn btn-secondary" onclick="clearOutput()">Clear Output</button>
+            <button class="btn btn-secondary" onclick="resetCode()">Reset Code</button>
         </div>
 
         <!-- Quick Examples -->
@@ -265,33 +213,8 @@ print("Circle area: " + circle.area())
             <button class="example-btn" onclick="loadExample('hello')">Hello World</button>
             <button class="example-btn" onclick="loadExample('loops')">Loops</button>
             <button class="example-btn" onclick="loadExample('functions')">Functions</button>
+            <button class="example-btn" onclick="loadExample('math')">Math</button>
             <button class="example-btn" onclick="loadExample('classes')">Classes</button>
-            <button class="example-btn" onclick="loadExample('arrays')">Arrays</button>
-            <button class="example-btn" onclick="loadExample('processes')">Processes</button>
-        </div>
-
-        <!-- Info Section -->
-        <div style="margin-top: 4rem; padding: 2rem; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color);">
-            <h2 style="color: var(--accent-primary); margin-bottom: 1rem;">Playground Status</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
-                The interactive playground is currently in demo mode. A full WASM-based implementation with live code execution is coming soon! 
-                In the meantime, you can explore BuLang by reading the documentation and checking out the demos.
-            </p>
-
-            <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Coming Soon</h3>
-            <ul class="feature-list">
-                <li>Real-time code execution via WASM</li>
-                <li>Syntax highlighting with CodeMirror</li>
-                <li>Error reporting and debugging</li>
-                <li>Save and share code snippets</li>
-                <li>Built-in examples and tutorials</li>
-                <li>Performance profiling tools</li>
-            </ul>
-
-            <p style="margin-top: 2rem; color: var(--text-secondary); font-size: 0.9rem;">
-                Want to help accelerate development? 
-                <a href="https://github.com/akadjoker/bulang" style="color: var(--accent-primary); text-decoration: none;">Contribute on GitHub</a>
-            </p>
         </div>
     </div>
 
@@ -305,32 +228,50 @@ print("Circle area: " + circle.area())
         </div>
     </footer>
 
+    <!-- ✅ Carrega o módulo WASM -->
+    <script src="bulang.js"></script>
+
     <script>
+        let BuLangModule = null;
+
+        // ✅ Inicializa o módulo WASM
+        createBuLangModule().then(module => {
+            BuLangModule = module;
+            console.log("✓ BuLang WASM loaded!");
+            
+            // Atualiza UI
+            document.getElementById('status-badge').className = 'status-badge';
+            document.getElementById('status-badge').textContent = '✓ Ready';
+            document.getElementById('run-btn').disabled = false;
+            document.getElementById('output').innerHTML = '<div class="output-empty">Ready to execute!</div>';
+        }).catch(err => {
+            console.error("Error loading WASM:", err);
+            document.getElementById('output').innerHTML = `<div style="color: #ff4444;">❌ Failed to load WASM module<br>${err}</div>`;
+        });
+
         const examples = {
             'hello': `// Hello World
-print("Hello, BuLang!")
-print("Welcome to the playground!")`,
+write("Hello, BuLang!")
+write("Welcome to the playground!")`,
 
-            'loops': `// Loops in BuLang
+            'loops': `// Loops
 for i = 1; i <= 5; i = i + 1 {
-    print("i = " + i)
+    write("i = {}", i)
 }
 
 count = 0
 while count < 3 {
-    print("Count: " + count)
+    write("Count: {}", count)
     count = count + 1
 }`,
 
-            'functions': `// First-class functions
+            'functions': `// Functions
 def greet(name) {
     return "Hello, " + name
 }
 
-result = greet("BuLang")
-print(result)
+write(greet("BuLang"))
 
-// Function as argument
 def apply(f, x) {
     return f(x)
 }
@@ -339,96 +280,82 @@ def double(n) {
     return n * 2
 }
 
-print(apply(double, 21))`,
+write("double(21) = {}", apply(double, 21))`,
 
-            'classes': `// Object-Oriented Programming
-class Player {
-    def init(name, level) {
-        this.name = name
-        this.level = level
+            'math': `// Math functions
+write("sqrt(16) = {}", sqrt(16))
+write("sqrt(2) = {}", sqrt(2))
+write("sin(0) = {}", sin(0))
+write("cos(0) = {}", cos(0))
+write("abs(-42) = {}", abs(-42))`,
+
+            'classes': `// Classes
+class Point {
+    def new(x, y) {
+        this.x = x
+        this.y = y
     }
     
-    def level_up() {
-        this.level = this.level + 1
+    def display() {
+        write("Point({}, {})", this.x, this.y)
     }
 }
 
-player = Player("Hero", 1)
-player.level_up()
-write("{} " is now level {}",  player.name,player.level)`,
-
-            'arrays': `// Working with arrays
-arr = [10, 20, 30, 40, 50]
-print(arr.lenght())
-arr.push( 60)
-print(arr)
-
-// Array iteration
-for i = 0; i < arr.length(); i = i + 1 
-{
-    print(arr[i])
-}`,
-
-            'processes': `// Process example (pseudo-code)
-// BuLang's process system for concurrent tasks
-
-process counter(id) {
-    for i = 0; i < 3; i = i + 1 {
-        print("Process " + id + ": " + i)
-        yield
-    }
-}
-
-// In full BuLang, you would spawn:
-// spawn counter(1)
-// spawn counter(2)
-
-print("Processes would run concurrently!")`
+p = Point(10, 20)
+p.display()`
         };
 
         function runCode() {
+            if (!BuLangModule) {
+                showOutput("❌ WASM module not loaded yet!", true);
+                return;
+            }
+
             const code = document.getElementById('code-editor').value;
             const output = document.getElementById('output');
-            
-            // Clear output
-            output.innerHTML = '';
-            
-            // Add a note about demo mode
-            const note = document.createElement('div');
-            note.className = 'output-empty';
-            note.textContent = '⚠️ Demo mode: Real execution coming soon!\n\nThe code above demonstrates BuLang syntax.';
-            output.appendChild(note);
-            
-            // Show execution feedback
-            setTimeout(() => {
-                const feedback = document.createElement('div');
-                feedback.style.marginTop = '1rem';
-                feedback.style.color = 'var(--text-secondary)';
-                feedback.textContent = '\n✓ Code syntax validated!\nFull execution available with WASM integration.';
-                output.appendChild(feedback);
-            }, 300);
+
+            try {
+                // ✅ Chama executeCode do WASM
+                const result = BuLangModule.executeCode(code);
+                showOutput(result, false);
+            } catch (e) {
+                showOutput(`❌ Error: ${e.message}`, true);
+                console.error(e);
+            }
         }
 
-        function clearCode() {
-            document.getElementById('code-editor').value = '';
-            document.getElementById('output').innerHTML = '<div class="output-empty">Output will appear here...</div>';
+        function showOutput(text, isError) {
+            const output = document.getElementById('output');
+            
+            if (isError) {
+                output.innerHTML = `<div style="color: #ff4444; white-space: pre-wrap;">${escapeHtml(text)}</div>`;
+            } else {
+                output.innerHTML = `<div style="color: var(--accent-primary); white-space: pre-wrap;">${escapeHtml(text)}</div>`;
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function clearOutput() {
+            document.getElementById('output').innerHTML = '<div class="output-empty">Output cleared</div>';
         }
 
         function resetCode() {
             document.getElementById('code-editor').value = examples['hello'];
-            document.getElementById('output').innerHTML = '<div class="output-empty">Output will appear here...</div>';
+            clearOutput();
         }
 
         function loadExample(name) {
             if (examples[name]) {
                 document.getElementById('code-editor').value = examples[name];
-                document.getElementById('output').innerHTML = '<div class="output-empty">Click "Run Code" to execute...</div>';
+                clearOutput();
                 document.getElementById('code-editor').focus();
             }
         }
-
-        // Initialize output
-        document.getElementById('output').innerHTML = '<div class="output-empty">Output will appear here...</div>';
     </script>
 </body>
 </html>
