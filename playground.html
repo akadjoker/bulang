@@ -213,7 +213,7 @@
 print(&quot;Hello, BuLang!&quot;)">// Welcome to BuLang Playground!
 // Try some BuLang code
 
-fn factorial(n) {
+def factorial(n) {
     if n <= 1 {
         return 1
     }
@@ -223,18 +223,23 @@ fn factorial(n) {
 print("5! = " + factorial(5))
 
 // Define a class
-class Circle {
-    fn new(radius) {
+class Circle 
+{
+    def new(radius) 
+    {
         this.radius = radius
     }
     
-    fn area() {
+    def area() 
+    {
         return 3.14159 * this.radius * this.radius
     }
 }
 
-circle = Circle.new(5)
-print("Circle area: " + circle.area())</textarea>
+circle = Circle(5)
+print("Circle area: " + circle.area())
+
+</textarea>
                 </div>
             </div>
 
@@ -285,7 +290,7 @@ print("Circle area: " + circle.area())</textarea>
 
             <p style="margin-top: 2rem; color: var(--text-secondary); font-size: 0.9rem;">
                 Want to help accelerate development? 
-                <a href="https://github.com/yourusername/bulang" style="color: var(--accent-primary); text-decoration: none;">Contribute on GitHub</a>
+                <a href="https://github.com/akadjoker/bulang" style="color: var(--accent-primary); text-decoration: none;">Contribute on GitHub</a>
             </p>
         </div>
     </div>
@@ -294,9 +299,7 @@ print("Circle area: " + circle.area())</textarea>
     <footer>
         <div class="footer-content">
             <div class="social-links">
-                <a href="https://github.com/yourusername/bulang" target="_blank">GitHub</a>
-                <a href="#">Discord</a>
-                <a href="#">Twitter</a>
+                <a href="https://github.com/akadjoker/bulang" target="_blank">GitHub</a>
             </div>
             <p>&copy; 2025 BuLang. Made with ❤️ for game developers. MIT License.</p>
         </div>
@@ -320,7 +323,7 @@ while count < 3 {
 }`,
 
             'functions': `// First-class functions
-fn greet(name) {
+def greet(name) {
     return "Hello, " + name
 }
 
@@ -328,11 +331,11 @@ result = greet("BuLang")
 print(result)
 
 // Function as argument
-fn apply(f, x) {
+def apply(f, x) {
     return f(x)
 }
 
-fn double(n) {
+def double(n) {
     return n * 2
 }
 
@@ -340,29 +343,29 @@ print(apply(double, 21))`,
 
             'classes': `// Object-Oriented Programming
 class Player {
-    fn new(name, level) {
+    def init(name, level) {
         this.name = name
         this.level = level
     }
     
-    fn level_up() {
+    def level_up() {
         this.level = this.level + 1
     }
 }
 
-player = Player.new("Hero", 1)
+player = Player("Hero", 1)
 player.level_up()
-print(player.name + " is now level " + player.level)`,
+write("{} " is now level {}",  player.name,player.level)`,
 
             'arrays': `// Working with arrays
 arr = [10, 20, 30, 40, 50]
-print(len(arr))
-
-push(arr, 60)
+print(arr.lenght())
+arr.push( 60)
 print(arr)
 
 // Array iteration
-for i = 0; i < len(arr); i = i + 1 {
+for i = 0; i < arr.length(); i = i + 1 
+{
     print(arr[i])
 }`,
 
