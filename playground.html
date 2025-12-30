@@ -250,59 +250,68 @@ write("sin(0) = {}", sin(0))
         });
 
         const examples = {
-            'hello': `// Hello World
-write("Hello, BuLang!")
-write("Welcome to the playground!")`,
+            'hello': `// Welcome to BuLang Playground!
 
-            'loops': `// Loops
-for i = 1; i <= 5; i = i + 1 {
-    write("i = {}", i)
+def factorial(n) 
+{
+    if( n <= 1) 
+    {
+        return 1;
+    }
+    return n * factorial(n - 1);
 }
 
-count = 0
-while count < 3 {
-    write("Count: {}", count)
-    count = count + 1
-}`,
+write("5! = {}\n", factorial(5));
+
+// Math functions
+write("sqrt(16) = {}\n", sqrt(16));
+write("sin(0) = {}\n", sin(0));`,
 
             'functions': `// Functions
-def greet(name) {
-    return "Hello, " + name
+def greet(name) 
+{
+    return "Hello, " + name;
 }
 
-write(greet("BuLang"))
+write(greet("BuLang"));
 
-def apply(f, x) {
-    return f(x)
+def apply(f, x) 
+{
+    return f(x);
 }
 
-def double(n) {
-    return n * 2
+def double(n) 
+{
+    return n * 2;
 }
 
-write("double(21) = {}", apply(double, 21))`,
+write("double(21) = {} \n", apply(double, 21));`,
 
             'math': `// Math functions
-write("sqrt(16) = {}", sqrt(16))
-write("sqrt(2) = {}", sqrt(2))
-write("sin(0) = {}", sin(0))
-write("cos(0) = {}", cos(0))
-write("abs(-42) = {}", abs(-42))`,
+write("sqrt(16) = {}\n", sqrt(16));
+write("sqrt(2) = {}\n", sqrt(2));
+write("sin(0) = {}\n", sin(0));
+write("cos(0) = {}\n", cos(0));
+write("abs(-42) = {}\n", abs(-42));`,
 
             'classes': `// Classes
-class Point {
-    def new(x, y) {
-        this.x = x
-        this.y = y
+class Point 
+{
+    var x, y;
+    def new(x, y) 
+    {
+        this.x = x;
+        this.y = y;
     }
     
-    def display() {
-        write("Point({}, {})", this.x, this.y)
+    def display() 
+    {
+        write("Point({}, {})", this.x, this.y);
     }
 }
 
-p = Point(10, 20)
-p.display()`
+p = Point(10, 20);
+p.display();`
         };
 
         function runCode() {
