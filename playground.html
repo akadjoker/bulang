@@ -256,11 +256,11 @@ def factorial(n)
     return n * factorial(n - 1);
 }
 
-write("5! = {}", factorial(5));
+write("5! = {}\\", factorial(5));
 
 // Math functions
-write("sqrt(16) = {}", sqrt(16));
-write("sin(0) = {}", sin(0));
+write("sqrt(16) = {}\\", sqrt(16));
+write("sin(0) = {}\\", sin(0));
 </textarea>
                 </div>
             </div>
@@ -301,15 +301,11 @@ write("sin(0) = {}", sin(0));
             <p>&copy; 2025 BuLang. Made with ❤️ for game developers. MIT License.</p>
         </div>
     </footer>
-
-    <input id="name" type="text">
-<button onclick="test()">Test</button>
-<div id="output"></div>
+ 
     <!-- WASM Module -->
     <script src="bulang.js"></script>
 
     <script>
-
 
 
         // Mobile menu toggle
@@ -345,15 +341,8 @@ write("sin(0) = {}", sin(0));
             document.getElementById('output').innerHTML = `<div style="color: #ff4444;">✗ Failed to load WASM module<br>${err}</div>`;
         });
 
+ 
 
-        function test() {
-    const code = `
-        name = dom_get_value("name")
-        dom_set_text("output", "Hello, " + name + "!")
-        console_log("Name entered:", name)
-    `;
-    BuLangModule.executeCode(code);
-}
 
         const examples = {
             'hello': `// Welcome to BuLang Playground!
