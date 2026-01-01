@@ -990,21 +990,26 @@ process enemy_behavior(enemy_id) {
             <h2 id="raylib">Raylib Integration</h2>
             <p>BuLang integrates seamlessly with Raylib for 2D/3D graphics:</p>
             <pre class="code-example"><code><span class="example-label">// Simple Raylib game loop</span>
-def main() {
-    InitWindow(800, 600, "BuLang Game")
-    SetTargetFPS(60)
+def main() 
+{
+    InitWindow(800, 600, "BuLang Game");
+    SetTargetFPS(60);
 
-    while not WindowShouldClose() {
-        BeginDrawing()
-        ClearBackground({r: 0, g: 0, b: 0})
+    var red = Color(255,0,0,255); // native raylib color
+    var blue = Color(0,0,255,255);
+
+    while not WindowShouldClose() 
+    {
+        BeginDrawing();
+        ClearBackground(blue);
         
         // Draw rectangle
-        DrawRectangle(100, 100, 50, 50, {r: 255, g: 0, b: 0})
+        DrawRectangle(100, 100, 50, 50, red);
         
-        EndDrawing()
+        EndDrawing();
     }
 
-    CloseWindow()
+    CloseWindow();
 }
 
 main()</code></pre>
@@ -1021,26 +1026,7 @@ main()</code></pre>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><span class="code-inline">print(value)</span></td>
-                            <td>Output value to console</td>
-                        </tr>
-                        <tr>
-                            <td><span class="code-inline">len(array)</span></td>
-                            <td>Get length of array or string</td>
-                        </tr>
-                        <tr>
-                            <td><span class="code-inline">push(array, value)</span></td>
-                            <td>Add value to end of array</td>
-                        </tr>
-                        <tr>
-                            <td><span class="code-inline">pop(array)</span></td>
-                            <td>Remove and return last value</td>
-                        </tr>
-                        <tr>
-                            <td><span class="code-inline">type(value)</span></td>
-                            <td>Get type of value as string</td>
-                        </tr>
+
                          <tr>
                             <td><span class="code-inline">frame</span></td>
                             <td>Pause process until next update</td>
