@@ -249,11 +249,7 @@ write('Hello, BuLang!')">// Welcome to BuLang Playground!
 
 def factorial(n) 
 {
-<<<<<<< HEAD
     if (n <= 1 )
-=======
-    if n <= 1 
->>>>>>> a9dec4220d9cf53c8c129607a60ea52a478c44af
     {
         return 1;
     }
@@ -306,10 +302,16 @@ write("sin(0) = {}", sin(0));
         </div>
     </footer>
 
+    <input id="name" type="text">
+<button onclick="test()">Test</button>
+<div id="output"></div>
     <!-- WASM Module -->
     <script src="bulang.js"></script>
 
     <script>
+
+
+
         // Mobile menu toggle
         const menuToggle = document.getElementById('menu-toggle');
         const navLinks = document.getElementById('nav-links');
@@ -342,6 +344,16 @@ write("sin(0) = {}", sin(0));
             console.error("Error loading WASM:", err);
             document.getElementById('output').innerHTML = `<div style="color: #ff4444;">✗ Failed to load WASM module<br>${err}</div>`;
         });
+
+
+        function test() {
+    const code = `
+        name = dom_get_value("name")
+        dom_set_text("output", "Hello, " + name + "!")
+        console_log("Name entered:", name)
+    `;
+    BuLangModule.executeCode(code);
+}
 
         const examples = {
             'hello': `// Welcome to BuLang Playground!
