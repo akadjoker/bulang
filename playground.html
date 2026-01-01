@@ -347,20 +347,20 @@ write("sin(0) = {}\\", sin(0));
         const examples = {
             'hello': `// Welcome to BuLang Playground!
 
-def factorial(n) 
-{
-    if( n <= 1) 
-    {
-        return 1;
-    }
-    return n * factorial(n - 1);
-}
+var id = canvas_in_output(640, 360);
+print(id);
 
-write("5! = {}\\n", factorial(5));
+canvas_clear(id);
+canvas_set_fill_style(id, "#222");
+canvas_fill_rect(id, 0, 0, 1024, 360);
 
-// Math functions
-write("sqrt(16) = {}\\n", sqrt(16));
-write("sin(0) = {}\\n", sin(0));`,
+canvas_set_fill_style(id, "#00d9ff");
+canvas_fill_rect(id, 550, 50, 120, 80);
+
+canvas_set_fill_style(id, "white");
+canvas_set_font(id, "20px sans-serif");
+canvas_fill_text(id, "Hello, BuLang :D", 30, 30);
+`,
 
             'functions': `// Functions
 def greet(name) 
