@@ -445,7 +445,12 @@
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">BuLang</a>
-            <ul class="nav-links">
+            <button class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="docs.html">Docs</a></li>
                 <li><a href="playground.html">Playground</a></li>
@@ -613,6 +618,23 @@
     </footer>
 
     <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
         // Mark active nav link
         document.querySelectorAll('.nav-links a').forEach(link => {
             if (link.getAttribute('href') === 'index.html' || window.location.pathname.endsWith('/')) {
