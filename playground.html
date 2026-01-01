@@ -450,15 +450,26 @@ do
             }
         }
 
-        function showOutput(text, isError) {
-            const output = document.getElementById('output');
+        // function showOutput(text, isError) {
+        //     const output = document.getElementById('output');
             
-            if (isError) {
-                output.innerHTML = `<div style="color: #ff4444; white-space: pre-wrap;">${escapeHtml(text)}</div>`;
-            } else {
-                output.innerHTML = `<div style="color: var(--accent-primary); white-space: pre-wrap;">${escapeHtml(text)}</div>`;
-            }
+        //     if (isError) {
+        //         output.innerHTML = `<div style="color: #ff4444; white-space: pre-wrap;">${escapeHtml(text)}</div>`;
+        //     } else {
+        //         output.innerHTML = `<div style="color: var(--accent-primary); white-space: pre-wrap;">${escapeHtml(text)}</div>`;
+        //     }
+        // }
+        function showOutput(text, isError) {
+        const out = document.getElementById('output');
+
+        const line = document.createElement('div');
+        line.style.whiteSpace = 'pre-wrap';
+        line.style.color = isError ? '#ff4444' : 'var(--accent-primary)';
+        line.textContent = text;
+
+        out.appendChild(line); 
         }
+
 
         function escapeHtml(text) {
             const div = document.createElement('div');
