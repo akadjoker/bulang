@@ -402,18 +402,28 @@ p = Point(10, 20);
 p.display();`,
 
             'loops': `// Loops
-for i in range(5) 
+for (var i = 0; i < 3; i++)
 {
     write("Loop iteration: {}\\n", i);
 }
 
 // While loop
 count = 0;
-while count < 3 
+while (count < 3 )
 {
     write("Count: {}\\n", count);
     count = count + 1;
-}`
+}
+
+// Do-while loop
+count = 0;
+do 
+{
+    write("Count: {}\\n", count);
+    count = count + 1;
+} while (count < 3);
+
+`
         };
 
         function runCode() {
