@@ -1,9 +1,6 @@
-/build
-/tmp
-/bin/game
-/bin/main
-/bin/testStructs
-/bin/flixel
-/bin/tests
-/bulang-web
-.cache
+tmp/
+tmp2/
+pages/
+pages/
+page2/
+demos/

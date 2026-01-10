@@ -34,12 +34,68 @@
             }
         }
     },
-    "builtin": {
-        "label": "Built-in Functions",
+    "controlflow_advanced": {
+        "label": "Advanced Control Flow",
         "examples": {
-            "math": {
-                "title": "Math Functions",
-                "code": "// Math functions\nwrite(\"sqrt(16) = {}\\n\", sqrt(16));\nwrite(\"sqrt(2) = {}\\n\", sqrt(2));\nwrite(\"sin(0) = {}\\n\", sin(0));\nwrite(\"cos(0) = {}\\n\", cos(0));\nwrite(\"abs(-42) = {}\\n\", abs(-42));"
+            "foreach_loop": {
+                "title": "Foreach Loop (Native)",
+                "code": "// Native foreach loop\nvar numbers = [10, 20, 30, 40, 50];\nvar sum = 0;\n\nforeach (num in numbers) \n{\n    write(\"Processing: {}\\n\", num);\n    sum = sum + num;\n}\n\nwrite(\"Total sum: {}\\n\", sum);\n\n// Foreach with break\nvar words = [\"Hello\", \"World\", \"BuLang\", \"Rocks\"];\nvar found = \"\";\n\nforeach (word in words) \n{\n    write(\"Checking: {}\\n\", word);\n    if (word == \"BuLang\") \n    {\n        found = word;\n        break;\n    }\n}\n\nwrite(\"Found: {}\\n\", found);"
+            },
+            "try_catch": {
+                "title": "Try-Catch Error Handling",
+                "code":  "var successPath = false;\nvar catchPath = false;\nvar errorMsg = \"\";\n\ntry {\n    var a = 10;\n    var b = 0;\n    var c = a / b;\n    successPath = true;\n} catch (err) {\n    catchPath = true;\n    errorMsg = err;\n    write(\"   -> Errr captured: {} \\n\" , err);\n}\n\nwrite(\"Program continues!\\n\");\nwrite(\"Sucess: {}\\n\", successPath);\nwrite(\"Catch: {}\\n\", catchPath);"
+
+
+            }
+        }
+    },
+    "buffers": {
+        "label": "Typed Buffers (Binary Data)",
+        "examples": {
+            "basic_buffers": {
+                "title": "Creating & Using Buffers",
+                "code": "// Typed buffers for binary data\nwrite(\"=== BUFFER CREATION ===\\n\");\n\n// Create buffers with different types\nvar b8 = @(4, TYPE_UINT8);   // 4 bytes\nvar b16 = @(100, TYPE_INT16); // 100 int16s\nvar floats = @(10, TYPE_FLOAT); // 10 floats\n\nwrite(\"Created buffers\\n\");\n\n// Indexing and assignment\nb8[0] = 255;\nb8[1] = 128;\nb8[2] = 64;\n\nwrite(\"b8[0] = {}\\n\", b8[0]);\nwrite(\"b8[1] = {}\\n\", b8[1]);\nwrite(\"b8[2] = {}\\n\", b8[2]);\n\n// Fill with value\nfloats.fill(3.14);\nwrite(\"floats[0] = {}\\n\", floats[0]);\nwrite(\"floats[5] = {}\\n\", floats[5]);\n\n// Get length\nwrite(\"Buffer length: {}\\n\", b8.length());"
+            },
+            "buffer_operations": {
+                "title": "Buffer Methods (fill, clear, slice)",
+                "code": "// Buffer operations\nvar buffer = @(10, TYPE_UINT8);\n\nwrite(\"=== FILL ===\\n\");\nbuffer.fill(42);\nwrite(\"buffer[0] = {}\\n\", buffer[0]);\nwrite(\"buffer[9] = {}\\n\", buffer[9]);\n\nwrite(\"\\n=== CLEAR ===\\n\");\nbuffer.clear();\nwrite(\"After clear: {}\\n\", buffer[0]);\n\nwrite(\"\\n=== SLICE ===\\n\");\nvar original = @(10, TYPE_INT32);\noriginal.fill(100);\n\n// Create sub-buffer [2, 3, 4]\nvar slice = original.slice(2, 5);\nwrite(\"Slice length: {}\\n\", slice.length());\nwrite(\"slice[0] = {}\\n\", slice[0]);\n\n// Modify slice\nslice.fill(999);\nwrite(\"Modified slice[0] = {}\\n\", slice[0]);"
+            },
+            "buffer_copy": {
+                "title": "Copying Between Buffers",
+                "code": "// Buffer copy operations\nvar src = @(5, TYPE_UINT8);\nvar dst = @(10, TYPE_UINT8);\n\n// Fill source\nfor (var i = 0; i < 5; i = i + 1) {\n    src[i] = i * 10;\n}\n\nwrite(\"Source: \");\nfor (var i = 0; i < 5; i = i + 1) {\n    write(\"{} \", src[i]);\n}\nwrite(\"\\n\");\n\n// Copy src to dst[3]\n// copy(dst_offset, src, src_offset, count)\ndst.copy(3, src, 0, 5);\n\nwrite(\"Destination: \");\nfor (var i = 0; i < 10; i = i + 1) {\n    write(\"{} \", dst[i]);\n}\nwrite(\"\\n\");\n\nwrite(\"dst[3] = {}\\n\", dst[3]);\nwrite(\"dst[4] = {}\\n\", dst[4]);\nwrite(\"dst[5] = {}\\n\", dst[5]);"
+            },
+            "image_processing": {
+                "title": "Image Processing Example",
+                "code": "// Image buffer processing\nwrite(\"Creating 10x10 RGB image...\\n\");\n\nvar width = 10;\nvar height = 10;\nvar image = @(width * height * 3, TYPE_UINT8);\n\n// Fill with gradient\nfor (var y = 0; y < height; y = y + 1) {\n    for (var x = 0; x < width; x = x + 1) {\n        var i = (y * width + x) * 3;\n        image[i + 0] = x * 25;     // R\n        image[i + 1] = y * 25;     // G\n        image[i + 2] = 128;        // B (constant)\n    }\n}\n\nwrite(\"Image created: {} bytes\\n\", image.length());\nwrite(\"First pixel RGB: ({}, {}, {})\\n\", \n    image[0], image[1], image[2]);\n\n// Create thumbnail (5x5)\nvar thumb = @(5 * 5 * 3, TYPE_UINT8);\nthumb.fill(255); // White background\n\nwrite(\"Thumbnail: {} bytes\\n\", thumb.length());"
+            },
+            "type_overflow": {
+                "title": "Type Safety & Overflow",
+                "code": "// Type checking and overflow behavior\nwrite(\"=== UINT8 Overflow ===\\n\");\nvar b8 = @(4, TYPE_UINT8);\n\nb8[0] = 255;   // Max value\nb8[1] = -1;    // Wraps to 255\nb8[2] = 256;   // Wraps to 0\nb8[3] = 300;   // Wraps to 44\n\nwrite(\"b8[0] (255) = {}\\n\", b8[0]);\nwrite(\"b8[1] (-1) = {}\\n\", b8[1]);\nwrite(\"b8[2] (256) = {}\\n\", b8[2]);\nwrite(\"b8[3] (300) = {}\\n\", b8[3]);\n\nwrite(\"\\n=== INT16 Range ===\\n\");\nvar i16 = @(2, TYPE_INT16);\ni16[0] = -32768;  // Min\ni16[1] = 32767;   // Max\n\nwrite(\"i16[0] = {}\\n\", i16[0]);\nwrite(\"i16[1] = {}\\n\", i16[1]);\n\nwrite(\"\\n=== FLOAT Precision ===\\n\");\nvar f32 = @(3, TYPE_FLOAT);\nf32[0] = 3.14159;\nf32[1] = -2.71828;\nf32[2] = 1.41421;\n\nwrite(\"PI: {}\\n\", f32[0]);\nwrite(\"e: {}\\n\", f32[1]);\nwrite(\"sqrt(2): {}\\n\", f32[2]);"
+            }
+        }
+    },
+    "builtin": {
+        "label": "Built-in Math Opcodes",
+        "examples": {
+            "math_trig": {
+                "title": "Trigonometry (sin, cos, tan)",
+                "code": "// Trigonometric functions (native opcodes!)\nwrite(\"=== TRIGONOMETRY ===\\n\");\n\n// Radians\nvar angle_rad = 1.5708;  // ~90 degrees\n\nwrite(\"sin(90°) = {}\\n\", sin(angle_rad));\nwrite(\"cos(90°) = {}\\n\", cos(angle_rad));\nwrite(\"tan(45°) = {}\\n\", tan(0.7854));\n\n// Convert degrees → radians\nvar angle_deg = 45;\nvar angle = rad(angle_deg);\nwrite(\"45° in radians = {}\\n\", angle);\n\n// Circular motion\nvar radius = 100;\nvar x = radius * cos(angle);\nvar y = radius * sin(angle);\nwrite(\"Circle point: ({}, {})\\n\", floor(x), floor(y));"
+            },
+            "math_distance": {
+                "title": "Distance & Angles (atan2, sqrt, pow)",
+                "code": "// Calculate distance and angle between points\nwrite(\"=== DISTANCE & ANGLES ===\\n\");\n\n// Two points\nvar x1 = 100;\nvar y1 = 100;\nvar x2 = 200;\nvar y2 = 150;\n\nvar dx = x2 - x1;\nvar dy = y2 - y1;\n\n// Distance: sqrt(dx² + dy²)\nvar dist = sqrt(pow(dx, 2) + pow(dy, 2));\nwrite(\"Distance: {}\\n\", dist);\n\n// Angle to target (atan2 handles all quadrants)\nvar angle_rad = atan2(dy, dx);\nvar angle_deg = deg(angle_rad);\nwrite(\"Angle: {} degrees\\n\", floor(angle_deg));\n\n// Power function\nwrite(\"2^8 = {}\\n\", pow(2, 8));\nwrite(\"3^3 = {}\\n\", pow(3, 3));"
+            },
+            "math_rounding": {
+                "title": "Rounding & Absolute Value",
+                "code": "// Rounding functions\nwrite(\"=== ROUNDING ===\\n\");\n\nvar value = 3.7;\n\nwrite(\"Original: {}\\n\", value);\nwrite(\"floor: {}\\n\", floor(value));  // 3.0\nwrite(\"ceil: {}\\n\", ceil(value));    // 4.0\n\nvar negative = -42.5;\nwrite(\"\\nabs(-42.5) = {}\\n\", abs(negative));  // 42.5\n\n// Practical use: grid snapping\nvar player_x = 123.456;\nvar grid_size = 32;\nvar snapped_x = floor(player_x / grid_size) * grid_size;\nwrite(\"\\nPlayer X: {}\\n\", player_x);\nwrite(\"Snapped to grid: {}\\n\", snapped_x);"
+            },
+            "math_logarithm": {
+                "title": "Logarithm & Exponential",
+                "code": "// Logarithm and exponential functions\nwrite(\"=== LOG & EXP ===\\n\");\n\n// Natural logarithm (base e)\nwrite(\"log(1) = {}\\n\", log(1));      // 0\nwrite(\"log(e) = {}\\n\", log(exp(1)));  // 1\nwrite(\"log(10) = {}\\n\", log(10));   // ~2.3\n\n// Exponential (e^x)\nwrite(\"\\nexp(0) = {}\\n\", exp(0));    // 1\nwrite(\"exp(1) = {}\\n\", exp(1));      // e (~2.718)\nwrite(\"exp(2) = {}\\n\", exp(2));      // e² (~7.389)\n\n// Practical: exponential decay\nvar initial = 100;\nvar decay_rate = 0.1;\nvar time = 5;\nvar remaining = initial * exp(-decay_rate * time);\nwrite(\"\\nAfter {} seconds: {}\\n\", time, floor(remaining));"
+            },
+            "physics_projectile": {
+                "title": "Physics - Projectile Trajectory",
+                "code": "// Projectile motion using native math opcodes\nwrite(\"=== PROJECTILE MOTION ===\\n\");struct Vec2\n{\nvar x,y;\n};\n\n\ndef calculate_trajectory(velocity, angle_deg, time) {\n    var angle = rad(angle_deg);\n    var vx = velocity * cos(angle);\n    var vy = velocity * sin(angle);\n    \n    var gravity = -9.81;\n    var x = vx * time;\n    var y = vy * time + 0.5 * gravity * pow(time, 2);\n    \n    return Vec2(x,y);\n}\n\n// Simulate projectile at 45° angle\nvar velocity = 50;  // m/s\nvar angle = 45;     // degrees\n\nwrite(\"Launch: {} m/s at {}°\\n\", velocity, angle);\nwrite(\"\\nTrajectory:\\n\");\n\nfor (var t = 0.0; t <= 2.0; t = t + 0.5) {\n    var pos = calculate_trajectory(velocity, angle, t);\n    write(\"t={}: x={}, y={}\\n\", \n        t, floor(pos.x), floor(pos.y));\n}"
             }
         }
     },
