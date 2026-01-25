@@ -378,26 +378,82 @@
         });
 
         // Demo data
-        const DEMOS = [
-            {
-                "id": "space-shooter",
-                "name": "Space Shooter",
-                "emoji": "🚀",
-                "description": "A classic 2D space shooter game. Control your ship with WASD or Arrow Keys, shoot with SPACE!",
-                "shellUrl": "./demos/shooter/bulang.html",
-                "tags": ["2D", "Action", "Classic"],
-                "featured": true
-            },
-            {
-                "id": "platformer",
-                "name": "Platformer",
-                "emoji": "🏃",
-                "description": "A classic platformer game with jumping, collecting coins, and reaching goals!",
-                "shellUrl": "./demos/plataform/bulang.html",
-                "tags": ["2D", "Platformer", "Adventure"],
-                "featured": true
-            }
-        ];
+  const DEMOS = [
+    {
+      id: "boids",
+      name: "Boids",
+      emoji: "🐟",
+      description: "Flocking simulation (alignment, cohesion, separation).",
+      shellUrl: "./demos/boids/index.html",
+      tags: ["Simulation", "AI", "2D"],
+      featured: true
+    },
+    {
+      id: "doom",
+      name: "Doom",
+      emoji: "🔫",
+      description: "Doom/Wolf3D-style raycasting renderer.",
+      shellUrl: "./demos/doom/index.html",
+      tags: ["Raycasting", "Renderer", "Classic"],
+      featured: true
+    },
+    {
+      id: "physics",
+      name: "Physics",
+      emoji: "🧲",
+      description: "Physics sandbox demo.",
+      shellUrl: "demos/physics/index.html",
+      tags: ["Physics", "2D", "Demo"],
+      featured: false
+    },
+    {
+      id: "pinball",
+      name: "Pinball",
+      emoji: "🕹️",
+      description: "Pinball with collisions + flippers.",
+      shellUrl: "demos/pinball/index.html",
+      tags: ["Game", "Physics", "Arcade"],
+      featured: true
+    },
+    {
+      id: "shooter",
+      name: "Space Shooter",
+      emoji: "🚀",
+      description: "Classic 2D space shooter. Move + shoot.",
+      shellUrl: "./demos/shooter/index.html",
+      tags: ["2D", "Action", "Classic"],
+      featured: true
+    },
+    {
+  id: "fireworks",
+  name: "Fireworks",
+  emoji: "🎆",
+  description: "Particle fireworks demo (gravity, lifetime, colors).",
+  shellUrl: "./demos/fireworks/index.html",
+  tags: ["Particles", "2D", "Raylib"],
+  featured: true
+},
+{
+  id: "cradle",
+  name: "Newton Cradle",
+  emoji: "⚙️",
+  description: "Newton's cradle simulation (constraints + collisions).",
+  shellUrl: "./demos/cradle/index.html",
+  tags: ["Physics", "Constraints", "Simulation"],
+  featured: false
+},
+{
+  id: "verlet",
+  name: "Verlet",
+  emoji: "🧵",
+  description: "Verlet integration demo (sticks/rope style physics).",
+  shellUrl: "./demos/verlet/index.html",
+  tags: ["Physics", "Verlet", "Simulation"],
+  featured: false
+}
+
+  ];
+
 
         // Render demos
         function renderDemos() {
